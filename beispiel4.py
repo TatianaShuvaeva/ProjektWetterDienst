@@ -1,8 +1,10 @@
+from typing import Any
 from flask import Flask, Response, request
 import os
 from dotenv import load_dotenv
-from cl_WetterDienst import WetterDienst
-from nicht_gefunden_fehler import NichtGefundenFehler
+from Unterricht_Aufgaben.WetterDienst.cl_WetterDienst import WetterDienst
+from Unterricht_Aufgaben.WetterDienst.nicht_gefunden_fehler import NichtGefundenFehler
+from Unterricht_Aufgaben.WetterDienst.stadt_vorhersage import StadtVorhersage
 
 
 load_dotenv()
@@ -51,8 +53,33 @@ def get_wetter():
         'sonnenaufgang': wetter_stadt.sonnenaufgang.isoformat(),
         'sonnenuntergang': wetter_stadt.sonnenuntergang.isoformat(),
         'stadt': wetter_stadt.stadt
+    }
+
+
+@app.route('/vorhersage')
+def get_vorhersage() -> Response | dict[str, Any]:
+    ausgewaehlte_stadt = request.args.get('stadt')
+    if ausgewaehlte_stadt is None:
+        return Response("Stadt ist None", status=400)
+
+    vorhersage = wetter_dienst.get_vorhersage(ausgewaehlte_stadt)
+
+    temperaturen_isoformat = []
+
+    for element in vorhersage.temperaturen:
+        temperaturen_isoformat.append({
+            'datum_zeit': element.datum_zeit.isoformat(),
+            'temperature': element.temperature,
+            'min_temperature': element.min_temperature,
+            'max_temperature': element.max_temperature
+        })
+
+    return {
+        'temperaturen': temperaturen_isoformat,
+        'land': vorhersage.land,
+        'stadt': vorhersage.stadt
 
     }
 
 
-app.run(host='0.0.0.0', port=5000)()
+app.run(host='0.0.0.0', port=5000)()  # type: ignore
