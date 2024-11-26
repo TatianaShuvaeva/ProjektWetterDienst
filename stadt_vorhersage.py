@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 
-from Unterricht_Aufgaben.WetterDienst.vorhersage import Vorhersage
+from vorhersage import Vorhersage
 
 
 class StadtVorhersage:

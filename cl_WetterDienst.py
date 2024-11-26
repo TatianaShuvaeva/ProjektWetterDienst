@@ -3,11 +3,11 @@ import requests
 from datetime import datetime
 from typing import List
 
-from Unterricht_Aufgaben.WetterDienst.nicht_gefunden_fehler import NichtGefundenFehler
-from Unterricht_Aufgaben.WetterDienst.vorhersage import Vorhersage
-from Unterricht_Aufgaben.WetterDienst.wetter import Wetter
-from Unterricht_Aufgaben.WetterDienst.koordinaten import Koorditaten
-from Unterricht_Aufgaben.WetterDienst.stadt_vorhersage import StadtVorhersage
+from nicht_gefunden_fehler import NichtGefundenFehler
+from vorhersage import Vorhersage
+from wetter import Wetter
+from koordinaten import Koorditaten
+from stadt_vorhersage import StadtVorhersage
 
 
 class WetterDienst:
@@ -38,7 +38,8 @@ class WetterDienst:
     @cache
     def get(self,  stadt: str) -> Wetter:
 
-        complete_url = self._base_url.format(stadt_name=stadt, api_key=self._api_key)
+        complete_url = self._base_url.format(
+            stadt_name=stadt, api_key=self._api_key)
 
         response = requests.get(complete_url)
 
@@ -58,12 +59,14 @@ class WetterDienst:
         sonnenaufgang = datetime.fromtimestamp(antwort_json["sys"]["sunrise"])
         sonnenuntergang = datetime.fromtimestamp(antwort_json["sys"]["sunset"])
         stadt = antwort_json["name"]
+        wolken = antwort_json["clouds"]["all"]
 
-        return Wetter(temperatur, min_temperature, max_temperature, wind, luftfeuchtigkeit, sonnenaufgang, sonnenuntergang, stadt)
+        return Wetter(temperatur, min_temperature, max_temperature, wind, luftfeuchtigkeit, sonnenaufgang, sonnenuntergang, stadt, wolken)
 
     @cache
     def _get_breiten_laengengrad(self,  stadt: str) -> Koorditaten:
-        url = self._url_breiten_laengengrad.format(stadt_name=stadt, api_key=self._api_key)
+        url = self._url_breiten_laengengrad.format(
+            stadt_name=stadt, api_key=self._api_key)
 
         response = requests.get(url)
 
@@ -84,12 +87,14 @@ class WetterDienst:
     def get_vorhersage(self,  stadt: str) -> StadtVorhersage:
         koordinaten = self._get_breiten_laengengrad(stadt)
 
-        url = self._url_fuenf_tage.format(breitengrad=koordinaten.breitengrad, laengengrad=koordinaten.laengengrad, api_key=self._api_key)
+        url = self._url_fuenf_tage.format(
+            breitengrad=koordinaten.breitengrad, laengengrad=koordinaten.laengengrad, api_key=self._api_key)
 
         response = requests.get(url)
 
         if response.status_code == 404:
-            raise NichtGefundenFehler(f"{koordinaten.breitengrad} und {koordinaten.laengengrad} sind nicht gefunden")
+            raise NichtGefundenFehler(f"{koordinaten.breitengrad} und {
+                                      koordinaten.laengengrad} sind nicht gefunden")
 
         antwort_json = response.json()
 
@@ -101,7 +106,8 @@ class WetterDienst:
             min_temperature = element["main"]["temp_min"]
             max_temperature = element["main"]["temp_max"]
 
-            vorhersage = Vorhersage(datum_zeit, temperature, min_temperature, max_temperature)
+            vorhersage = Vorhersage(
+                datum_zeit, temperature, min_temperature, max_temperature)
             vorhersagen.append(vorhersage)
 
         return StadtVorhersage(vorhersagen, koordinaten.stadt, koordinaten.land)

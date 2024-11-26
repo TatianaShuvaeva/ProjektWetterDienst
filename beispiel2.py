@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from Unterricht_Aufgaben.WetterDienst.cl_WetterDienst import WetterDienst
+from cl_WetterDienst import WetterDienst
 
 
 load_dotenv()

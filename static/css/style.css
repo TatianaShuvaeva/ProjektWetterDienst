@@ -1,40 +1,58 @@
-/* Основные стили для оформления интерфейса */
-body {
-    font-family: Arial, sans-serif;
-    background: #f0f4f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Hintergrund mit sanftem lila Verlauf */
+body.bg-gradient {
+    background: linear-gradient(135deg, #6a1b9a, #8e24aa); /* Lila- und Violettverlauf */
     height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
 }
 
-.container {
-    text-align: center;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+/* Wetterkarte */
+.weather-card {
+    max-width: 450px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-button {
-    padding: 10px 20px;
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+/* Textfarbe für Titel mit lila Verlauf */
+.text-gradient {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #e76dc9, #7c4dff); /* Kräftiger Farbverlauf von Pink nach Violett */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Eingabefeld */
+input.form-control {
+    font-size: 1rem;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+}
+
+/* Schöner, ansprechender Button mit Farbverlauf */
+.btn-beautiful {
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
     color: white;
+    background: linear-gradient(135deg, #e653bc, #7c4dff); /* Starker Verlauf */
     border: none;
     border-radius: 25px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    font-size: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
-button:hover {
-    background: linear-gradient(135deg, #feb47b, #ff7e5f);
-    transform: scale(1.1);
+
+.btn-beautiful:hover {
+    background: linear-gradient(135deg, #7c4dff, #e653bc); /* Umgekehrter Verlauf beim Hover */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Wetterinfo Box */
 .weather-info {
-    margin-top: 20px;
-    font-size: 18px;
+    font-size: 1.1rem;
     color: #333;
 }

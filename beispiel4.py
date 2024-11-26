@@ -2,9 +2,9 @@ from typing import Any
 from flask import Flask, Response, request
 import os
 from dotenv import load_dotenv
-from Unterricht_Aufgaben.WetterDienst.cl_WetterDienst import WetterDienst
-from Unterricht_Aufgaben.WetterDienst.nicht_gefunden_fehler import NichtGefundenFehler
-from Unterricht_Aufgaben.WetterDienst.stadt_vorhersage import StadtVorhersage
+from cl_WetterDienst import WetterDienst
+from nicht_gefunden_fehler import NichtGefundenFehler
+from stadt_vorhersage import StadtVorhersage
 
 
 load_dotenv()
@@ -52,7 +52,9 @@ def get_wetter():
         'luftfeuchtigkeit': wetter_stadt.luftfeuchtigkeit,
         'sonnenaufgang': wetter_stadt.sonnenaufgang.isoformat(),
         'sonnenuntergang': wetter_stadt.sonnenuntergang.isoformat(),
-        'stadt': wetter_stadt.stadt
+        'stadt': wetter_stadt.stadt,
+        'wolken': wetter_stadt.wolken
+        
     }
 
 
