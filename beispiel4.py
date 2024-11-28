@@ -3,7 +3,7 @@ from flask import Flask, Response, request
 import os
 from dotenv import load_dotenv
 from cl_WetterDienst import WetterDienst
-from nicht_gefunden_fehler import NichtGefundenFehler
+from exceptions.nicht_gefunden_fehler import NichtGefundenFehler
 from stadt_vorhersage import StadtVorhersage
 
 
@@ -14,6 +14,7 @@ if OPENWEATHERMAP_API_KEY is None:
     raise Exception("OPENWEATHERMAP_API_KEY nicht gefunden")
 
 app = Flask('WetterDienst')
+app.config['JSON_AS_ASCII'] = False
 
 wetter_dienst = WetterDienst(OPENWEATHERMAP_API_KEY)
 
@@ -53,8 +54,11 @@ def get_wetter():
         'sonnenaufgang': wetter_stadt.sonnenaufgang.isoformat(),
         'sonnenuntergang': wetter_stadt.sonnenuntergang.isoformat(),
         'stadt': wetter_stadt.stadt,
-        'wolken': wetter_stadt.wolken
-        
+        'wolken': wetter_stadt.wolken,
+        'wetterbedingungen': {
+            'type': wetter_stadt.wetterbedingungen.wetter_type.name,
+            'icon': wetter_stadt.wetterbedingungen.icon
+        }
     }
 
 

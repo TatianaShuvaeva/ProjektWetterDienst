@@ -3,7 +3,14 @@
         "lon": 13.0657,
         "lat": 52.3989
     },
-    "weather": [],
+    "weather": [
+        {
+            "id": 804,
+            "main": "Clouds",
+            "description": "overcast clouds",
+            "icon": "04n"
+        }
+    ],
     "base": "stations",
     "main": {
         "temp": 5.66,

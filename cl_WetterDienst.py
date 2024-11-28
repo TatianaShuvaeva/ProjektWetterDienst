@@ -3,11 +3,14 @@ import requests
 from datetime import datetime
 from typing import List
 
-from nicht_gefunden_fehler import NichtGefundenFehler
+from exceptions.api_dienst_error import ApiDienstError
+from exceptions.nicht_gefunden_fehler import NichtGefundenFehler
 from vorhersage import Vorhersage
 from wetter import Wetter
 from koordinaten import Koorditaten
 from stadt_vorhersage import StadtVorhersage
+from wetterType import WetterType
+from wetterbedingungen import Wetterbedingungen
 
 
 class WetterDienst:
@@ -60,8 +63,31 @@ class WetterDienst:
         sonnenuntergang = datetime.fromtimestamp(antwort_json["sys"]["sunset"])
         stadt = antwort_json["name"]
         wolken = antwort_json["clouds"]["all"]
+        wetter_type = self._parse_wetter_type(antwort_json)
+        wetter_type_icon = antwort_json["weather"][0]["icon"]
+        wetterbedingungen = Wetterbedingungen(wetter_type, wetter_type_icon)
 
-        return Wetter(temperatur, min_temperature, max_temperature, wind, luftfeuchtigkeit, sonnenaufgang, sonnenuntergang, stadt, wolken)
+        return Wetter(temperatur, min_temperature, max_temperature, wind, luftfeuchtigkeit, sonnenaufgang, sonnenuntergang, stadt, wolken, wetterbedingungen)
+
+    def _parse_wetter_type(self, antwort_json: dict) -> WetterType:
+        try:
+            wetter_type_id = str(antwort_json["weather"][0]["id"])
+        except (IndexError, KeyError):
+            raise ApiDienstError
+
+        wetter_types = {
+            "2": WetterType.THUNDERSTORM,
+            "3": WetterType.DRIZZLE,
+            "5": WetterType.RAIN,
+            "6": WetterType.SNOW,
+            "7": WetterType.FOG,
+            "800": WetterType.CLEAR,
+            "80": WetterType.CLOUDS
+        }
+        for key, wert in wetter_types.items():
+            if wetter_type_id.startswith(key):
+                return wert
+        raise ApiDienstError
 
     @cache
     def _get_breiten_laengengrad(self,  stadt: str) -> Koorditaten:
