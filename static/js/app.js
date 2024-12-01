@@ -21,7 +21,12 @@ function wetterAnzeigen(daten) {
     if (daten.error) {
         document.getElementById('weatherInfo').innerHTML = 'Stadt nicht gefunden!';
     } else {
+
+        const weatherIcon = daten.wetterbedingungen.icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
+
         document.getElementById('weatherInfo').innerHTML = `
+            <img src="${iconUrl}" alt="Wetter Icon" class="mb-3">
             <p>Temperatur: ${daten.temperature}°C</p>
             <p>Minimale Temperatur: ${daten.min_temperature}°C</p>
             <p>Maximale Temperatur: ${daten.max_temperature}°C</p>
@@ -32,3 +37,4 @@ function wetterAnzeigen(daten) {
         `;
     }
 }
+
