@@ -1,6 +1,7 @@
 /* Hintergrund mit sanftem lila Verlauf */
 body.bg-gradient {
-    background: linear-gradient(135deg, #6a1b9a, #8e24aa); /* Lila- und Violettverlauf */
+    background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+    /* Lila- und Violettverlauf */
     height: 100vh;
     margin: 0;
     font-family: 'Arial', sans-serif;
@@ -17,7 +18,8 @@ body.bg-gradient {
 .text-gradient {
     font-size: 2rem;
     font-weight: bold;
-    background: linear-gradient(135deg, #e76dc9, #7c4dff); /* Kräftiger Farbverlauf von Pink nach Violett */
+    background: linear-gradient(135deg, #e76dc9, #7c4dff);
+    /* Kräftiger Farbverlauf von Pink nach Violett */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -37,7 +39,8 @@ input.form-control {
     font-size: 1.1rem;
     font-weight: bold;
     color: white;
-    background: linear-gradient(135deg, #e653bc, #7c4dff); /* Starker Verlauf */
+    background: linear-gradient(135deg, #e653bc, #7c4dff);
+    /* Starker Verlauf */
     border: none;
     border-radius: 25px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
@@ -46,7 +49,8 @@ input.form-control {
 
 
 .btn-beautiful:hover {
-    background: linear-gradient(135deg, #7c4dff, #e653bc); /* Umgekehrter Verlauf beim Hover */
+    background: linear-gradient(135deg, #7c4dff, #e653bc);
+    /* Umgekehrter Verlauf beim Hover */
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
@@ -56,3 +60,15 @@ input.form-control {
     font-size: 1.1rem;
     color: #333;
 }
+
+#chartContainer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* @media (min-width: 1200px) {
+    .container-fluid {
+        max-width: 1200px;
+    }
+} */

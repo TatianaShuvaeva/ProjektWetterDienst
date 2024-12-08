@@ -1,5 +1,7 @@
 document.getElementById('getWeatherBtn').addEventListener('click', wetterAbrufen);
 
+let weatherChart = null;
+
 function wetterAbrufen() {
     const stadt = document.getElementById('city').value;
     if (!stadt) {
@@ -14,6 +16,15 @@ function wetterAbrufen() {
         })
         .catch(fehler => {
             document.getElementById('weatherInfo').innerHTML = 'Fehler beim Abrufen der Daten';
+        });
+
+    fetch(`/vorhersage?stadt=${stadt}`)
+        .then(response => response.json())
+        .then(daten => {
+            zeichneDiagramm(daten.temperaturen);
+        })
+        .catch(fehler => {
+            console.error('Fehler beim Abrufen der Vorhersagedaten:', fehler);
         });
 }
 
@@ -38,3 +49,69 @@ function wetterAnzeigen(daten) {
     }
 }
 
+function zeichneDiagramm(temperaturen) {
+    const labels = temperaturen.map(d => new Date(d.datum_zeit).toLocaleString());
+    const data1 = temperaturen.map(d => d.temperature);
+    const data2 = temperaturen.map(d => d.temperature + 10);
+    
+    const ctx = document.getElementById('weatherChart').getContext('2d');
+
+
+    if (weatherChart) {
+        weatherChart.destroy();
+    }
+
+
+    const datasets = [];
+
+    datasets.push({
+        label: 'Temperatur (°C)',
+        data: data1,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderWidth: 2,
+        fill: false
+    })
+
+    datasets.push(
+        {
+            label: 'Temperatur 2 (°C)',
+            data: data2,
+            borderColor: 'rgba(175, 192, 192, 1)',
+            backgroundColor: 'rgba(175, 192, 192, 0.2)',
+            borderWidth: 2,
+            fill: false
+        })
+
+    weatherChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Zeit'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Temperatur (°C)'
+                    },
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+}
