@@ -104,7 +104,7 @@ class WetterDienst:
         breitengrad = antwort_json[0]["lat"]
         laengengrad = antwort_json[0]["lon"]
         land = antwort_json[0]["country"]
-        gebiet = antwort_json[0]["state"]
+        gebiet = '' #antwort_json[0]["state"]
         stadt = antwort_json[0]["name"]
 
         return Koorditaten(breitengrad, laengengrad, land, gebiet, stadt)

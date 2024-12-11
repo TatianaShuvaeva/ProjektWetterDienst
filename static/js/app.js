@@ -1,6 +1,6 @@
 document.getElementById('getWeatherBtn').addEventListener('click', wetterAbrufen);
 
-let weatherChart = null;
+let wetterDiagramm = null;
 
 function wetterAbrufen() {
     const stadt = document.getElementById('city').value;
@@ -51,39 +51,27 @@ function wetterAnzeigen(daten) {
 
 function zeichneDiagramm(temperaturen) {
     const labels = temperaturen.map(d => new Date(d.datum_zeit).toLocaleString());
-    const data1 = temperaturen.map(d => d.temperature);
-    const data2 = temperaturen.map(d => d.temperature + 10);
-    
+    const datenTemperatur = temperaturen.map(d => d.temperature);
+        
     const ctx = document.getElementById('weatherChart').getContext('2d');
 
-
-    if (weatherChart) {
-        weatherChart.destroy();
+    if (wetterDiagramm) {
+        wetterDiagramm.destroy();
     }
-
 
     const datasets = [];
 
     datasets.push({
         label: 'Temperatur (°C)',
-        data: data1,
+        data: datenTemperatur,
         borderColor: 'rgba(75, 192, 192, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 2,
         fill: false
     })
 
-    datasets.push(
-        {
-            label: 'Temperatur 2 (°C)',
-            data: data2,
-            borderColor: 'rgba(175, 192, 192, 1)',
-            backgroundColor: 'rgba(175, 192, 192, 0.2)',
-            borderWidth: 2,
-            fill: false
-        })
-
-    weatherChart = new Chart(ctx, {
+   
+    wetterDiagramm = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
