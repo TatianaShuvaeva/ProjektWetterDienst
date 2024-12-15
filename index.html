@@ -17,8 +17,8 @@
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="text-center bg-light p-4 rounded-4 shadow-lg weather-card">
             <h1 class="text-gradient mb-4">Wetter Abfragen</h1>
-            <input type="text" id="city" class="form-control mb-4" placeholder="Stadt eingeben">
-            <button id="getWeatherBtn" class="btn btn-beautiful w-100">Wetter Abfragen</button>
+            <input data-cy="stadt-eingeben" type="text" id="city" class="form-control mb-4" placeholder="Stadt eingeben">
+            <button data-cy="wetter-abfragen" id="getWeatherBtn" class="btn btn-beautiful w-100">Wetter Abfragen</button>
             <div id="weatherInfo" class="weather-info mt-4">
                 <!-- Wetterinformationen werden hier angezeigt -->
             </div>

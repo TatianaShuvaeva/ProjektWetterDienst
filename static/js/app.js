@@ -39,7 +39,7 @@ function wetterAnzeigen(daten) {
         document.getElementById('weatherInfo').innerHTML = `
             <img src="${iconUrl}" alt="Wetter Icon" class="mb-3">
             <p>Temperatur: ${daten.temperature}°C</p>
-            <p>Minimale Temperatur: ${daten.min_temperature}°C</p>
+            <p>Minimale Temperatur: <span data-cy="min-temperatur">${daten.min_temperature}</span>°C</p>
             <p>Maximale Temperatur: ${daten.max_temperature}°C</p>
             <p>Windgeschwindigkeit: ${daten.wind} m/s</p>
             <p>Luftfeuchtigkeit: ${daten.luftfeuchtigkeit}%</p>
@@ -52,7 +52,7 @@ function wetterAnzeigen(daten) {
 function zeichneDiagramm(temperaturen) {
     const labels = temperaturen.map(d => new Date(d.datum_zeit).toLocaleString());
     const datenTemperatur = temperaturen.map(d => d.temperature);
-        
+
     const ctx = document.getElementById('weatherChart').getContext('2d');
 
     if (wetterDiagramm) {
@@ -70,7 +70,7 @@ function zeichneDiagramm(temperaturen) {
         fill: false
     })
 
-   
+
     wetterDiagramm = new Chart(ctx, {
         type: 'line',
         data: {
