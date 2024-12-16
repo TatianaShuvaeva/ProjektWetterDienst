@@ -38,13 +38,13 @@ function wetterAnzeigen(daten) {
 
         document.getElementById('weatherInfo').innerHTML = `
             <img src="${iconUrl}" alt="Wetter Icon" class="mb-3">
-            <p>Temperatur: ${daten.temperature}°C</p>
+            <p>Temperatur: <span data-cy="temperatur">${daten.temperature}</span>°C</p>
             <p>Minimale Temperatur: <span data-cy="min-temperatur">${daten.min_temperature}</span>°C</p>
-            <p>Maximale Temperatur: ${daten.max_temperature}°C</p>
-            <p>Windgeschwindigkeit: ${daten.wind} m/s</p>
-            <p>Luftfeuchtigkeit: ${daten.luftfeuchtigkeit}%</p>
-            <p>Sonnenaufgang: ${new Date(daten.sonnenaufgang).toLocaleTimeString()}</p>
-            <p>Sonnenuntergang: ${new Date(daten.sonnenuntergang).toLocaleTimeString()}</p>
+            <p>Maximale Temperatur: <span data-cy="max-temperatur">${daten.max_temperature}</span>°C</p>
+            <p>Windgeschwindigkeit: <span data-cy="windgeschwindigkeit">${daten.wind} </span>m/s</p>
+            <p>Luftfeuchtigkeit: <span data-cy="luftfeuchtigkeit">${daten.luftfeuchtigkeit}</span>%</p>
+            <p>Sonnenaufgang: <span data-cy="sonnenaufgang">${new Date(daten.sonnenaufgang).toLocaleTimeString()}</span></p>
+            <p>Sonnenuntergang: <span data-cy="sonnenuntergang">${new Date(daten.sonnenuntergang).toLocaleTimeString()}</span></p>
         `;
     }
 }
