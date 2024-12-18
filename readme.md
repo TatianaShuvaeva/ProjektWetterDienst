@@ -4,7 +4,7 @@
 Um GUI-Anwendungen anzuzeigen und mit ihnen zu interagieren, benötigen Sie einen X-Server auf Ihrem Windows-Rechner. Eine beliebte Option ist **VcXsrv**.
 
 - **VcXsrv herunterladen**:
-  - Gehen Sie zur [VcXsrv GitHub Release-Seite](https://sourceforge.net/projects/vcxsrv/) und installieren Sie es.
+  - Gehen Sie zur [VcXsrv GitHub Release-Seite](https://github.com/marchaesen/vcxsrv/releases) und installieren Sie es.
 - **VcXsrv konfigurieren**:
    - Öffnen Sie die App und konfigurieren Sie sie wie folgt:
      - Starten Sie `XLaunch`.
