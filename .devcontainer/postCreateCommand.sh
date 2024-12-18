@@ -1,6 +1,7 @@
 #! /bin/bash
 
 # Create a virtual environment
+apt update
 apt -y install python3.11-venv
 python3 -m venv .venv
 
