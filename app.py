@@ -10,7 +10,7 @@ from stadt_vorhersage import StadtVorhersage
 load_dotenv()
 
 OPENWEATHERMAP_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
-if OPENWEATHERMAP_API_KEY is None:
+if OPENWEATHERMAP_API_KEY is None or OPENWEATHERMAP_API_KEY == "":
     raise Exception("OPENWEATHERMAP_API_KEY nicht gefunden")
 
 app = Flask('WetterDienst')
