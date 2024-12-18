@@ -1,32 +1,32 @@
-## How-to start E2E tests on Windows WSL2 with Docker
+## Anleitung zum Starten von E2E-Tests unter Windows WSL2 mit Docker
 
-### 1. Install an X Server on Windows
-To display and interact with GUI applications, you need an X server running on your Windows machine. A popular choice is **VcXsrv**.
+### 1. Installation eines X-Servers unter Windows
+Um GUI-Anwendungen anzuzeigen und mit ihnen zu interagieren, benötigen Sie einen X-Server auf Ihrem Windows-Rechner. Eine beliebte Option ist **VcXsrv**.
 
-- **Download VcXsrv**:
-  - Go to the [VcXsrv GitHub release page](https://sourceforge.net/projects/vcxsrv/) and install it.
-- **Configure VcXsrv**:
-   - Open the app and configure it as follows:
-     - Start `XLaunch`.
-     - Select **Multiple Windows**.
-     - Set the **Display Number** to `:0`.
-     - **Disable Native OpenGL** (optional, for compatibility).
-     - **Allow all clients** (check the option for easier testing; secure it later).
-     - Finish the configuration.
+- **VcXsrv herunterladen**:
+  - Gehen Sie zur [VcXsrv GitHub Release-Seite](https://sourceforge.net/projects/vcxsrv/) und installieren Sie es.
+- **VcXsrv konfigurieren**:
+   - Öffnen Sie die App und konfigurieren Sie sie wie folgt:
+     - Starten Sie `XLaunch`.
+     - Wählen Sie **Multiple Windows**.
+     - Setzen Sie die **Display Number** auf `:0`.
+     - **Deaktivieren Sie Native OpenGL** (optional, für Kompatibilität).
+     - **Erlauben Sie alle Clients** (Option für einfacheres Testen aktivieren; später absichern).
+     - Schließen Sie die Konfiguration ab.
 
-VcXsrv should now be running on your Windows host.
+VcXsrv sollte nun auf Ihrem Windows-Host laufen.
 
-### 2. Build the DevContainer
-Open the project in Visual Studio Code and click on the green button in the bottom left corner. Select **Remote-Containers: Reopen in Container**. This will build the Docker container and open the project inside it.
+### 2. DevContainer erstellen
+Öffnen Sie das Projekt in Visual Studio Code und klicken Sie auf den grünen Button in der unteren linken Ecke. Wählen Sie **Remote-Containers: Reopen in Container**. Dies erstellt den Docker-Container und öffnet das Projekt darin.
 
-### 3. Start the backend
-To start the backend, please run the following command in the terminal:
+### 3. Backend starten
+Um das Backend zu starten, führen Sie bitte folgenden Befehl im Terminal aus:
 ```bash
 python app.py
 ```
 
-### 4. Run Cypress in Docker
-To execute Cypress, please run the following command in the terminal:
+### 4. Cypress in Docker ausführen
+Um Cypress auszuführen, führen Sie bitte folgenden Befehl im Terminal aus:
 ```bash
 cypress open
 ```
