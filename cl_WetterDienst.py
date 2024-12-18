@@ -119,8 +119,7 @@ class WetterDienst:
         response = requests.get(url)
 
         if response.status_code == 404:
-            raise NichtGefundenFehler(f"{koordinaten.breitengrad} und {
-                                      koordinaten.laengengrad} sind nicht gefunden")
+            raise NichtGefundenFehler(f"{koordinaten.breitengrad} und {koordinaten.laengengrad} sind nicht gefunden")
 
         antwort_json = response.json()
 
