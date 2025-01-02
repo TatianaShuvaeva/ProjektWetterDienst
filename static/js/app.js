@@ -5,7 +5,7 @@ let wetterDiagramm = null;
 function wetterAbrufen() {
     const stadt = document.getElementById('city').value;
     if (!stadt) {
-        alert('Bitte geben Sie eine Stadt ein');
+        document.getElementById('weatherInfo').innerHTML = 'Bitte geben Sie eine Stadt ein';
         return;
     }
 
