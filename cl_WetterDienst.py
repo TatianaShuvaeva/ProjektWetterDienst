@@ -96,11 +96,11 @@ class WetterDienst:
 
         response = requests.get(url)
 
-        if response.status_code == 404:
-            raise NichtGefundenFehler(f"{stadt} ist nicht gefunden")
-
         antwort_json = response.json()
-
+        
+        if antwort_json == []:        
+            raise NichtGefundenFehler(f"{stadt} ist nicht gefunden")
+        
         breitengrad = antwort_json[0]["lat"]
         laengengrad = antwort_json[0]["lon"]
         land = antwort_json[0]["country"]

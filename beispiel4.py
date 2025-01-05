@@ -65,10 +65,17 @@ def get_wetter():
 @app.route('/vorhersage')
 def get_vorhersage() -> Response | dict[str, Any]:
     ausgewaehlte_stadt = request.args.get('stadt')
-    if ausgewaehlte_stadt is None:
+    if ausgewaehlte_stadt is None or ausgewaehlte_stadt == '':
         return Response("Stadt ist None", status=400)
 
-    vorhersage = wetter_dienst.get_vorhersage(ausgewaehlte_stadt)
+    try:
+        vorhersage = wetter_dienst.get_vorhersage(ausgewaehlte_stadt)
+
+    except NichtGefundenFehler as error:
+        print(error)
+        return Response(f"{ausgewaehlte_stadt} ist nicht gefunden", status=404)
+
+    
 
     temperaturen_isoformat = []
 
