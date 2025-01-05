@@ -10,7 +10,9 @@ function wetterAbrufen() {
     }
 
     fetch(`/wetter?stadt=${stadt}`)
-        .then(response => response.json())
+        .then(response => {
+            return response.json();
+        })
         .then(daten => {
             wetterAnzeigen(daten);
         })
@@ -19,24 +21,22 @@ function wetterAbrufen() {
         });
 
     fetch(`/vorhersage?stadt=${stadt}`)
-        .then(response => response.json())
+        .then(response => {
+            return response.json();
+        })
         .then(daten => {
             zeichneDiagramm(daten.temperaturen);
         })
         .catch(fehler => {
-            console.error('Fehler beim Abrufen der Vorhersagedaten:', fehler);
+            document.getElementById('weatherChartError').innerHTML = 'Fehler beim Abrufen der Wettervorhersage';
         });
 }
 
 function wetterAnzeigen(daten) {
-    if (daten.error) {
-        document.getElementById('weatherInfo').innerHTML = 'Stadt nicht gefunden!';
-    } else {
+    const weatherIcon = daten.wetterbedingungen.icon;
+    const iconUrl = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
 
-        const weatherIcon = daten.wetterbedingungen.icon;
-        const iconUrl = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
-
-        document.getElementById('weatherInfo').innerHTML = `
+    document.getElementById('weatherInfo').innerHTML = `
             <img src="${iconUrl}" alt="Wetter Icon" class="mb-3">
             <p>Temperatur: <span data-cy="temperatur">${daten.temperature}</span>°C</p>
             <p>Minimale Temperatur: <span data-cy="min-temperatur">${daten.min_temperature}</span>°C</p>
@@ -46,7 +46,6 @@ function wetterAnzeigen(daten) {
             <p>Sonnenaufgang: <span data-cy="sonnenaufgang">${new Date(daten.sonnenaufgang).toLocaleTimeString()}</span></p>
             <p>Sonnenuntergang: <span data-cy="sonnenuntergang">${new Date(daten.sonnenuntergang).toLocaleTimeString()}</span></p>
         `;
-    }
 }
 
 function zeichneDiagramm(temperaturen) {
