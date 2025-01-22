@@ -1,0 +1,1 @@
+OpenWeatherMap Dokumentation: https://openweathermap.org/current
