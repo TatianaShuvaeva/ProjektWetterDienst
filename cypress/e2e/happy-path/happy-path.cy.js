@@ -4,7 +4,7 @@ describe('Happy Path', () => {
     });
 
 
-    it('das Wetter für die Stadt anzeigt', () => {
+    it('das Wetter für die Stadt mit umlaut anzeigt', () => {
         cy.wait(2000);
         cy.get('[data-cy="stadt-eingeben"]').type('München');
 
@@ -24,7 +24,7 @@ describe('Happy Path', () => {
         cy.get('#weatherChart').should('be.visible');
     });
 
-    it('das Wetter für die Stadt mit umlaut anzeigt', () => {
+    it('das Wetter für die Stadt anzeigt', () => {
         cy.wait(2000);
         cy.get('[data-cy="stadt-eingeben"]').type('Muenchen');
 
