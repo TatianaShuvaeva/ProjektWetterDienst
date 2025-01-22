@@ -20,7 +20,7 @@ wetter_dienst = WetterDienst(OPENWEATHERMAP_API_KEY)
 
 
 @app.route('/')
-def hello_world():
+def get_index():
 
     current_directory = os.path.realpath(
         os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -35,8 +35,10 @@ def hello_world():
 @app.route('/wetter')
 def get_wetter():
     ausgewaehlte_stadt = request.args.get('stadt')
-    if ausgewaehlte_stadt is None:
+    if ausgewaehlte_stadt is None or ausgewaehlte_stadt == '':
         return Response("Stadt ist None", status=400)
+
+    ausgewaehlte_stadt = ausgewaehlte_stadt.strip()
 
     try:
         wetter_stadt = wetter_dienst.get(ausgewaehlte_stadt)
@@ -68,14 +70,14 @@ def get_vorhersage() -> Response | dict[str, Any]:
     if ausgewaehlte_stadt is None or ausgewaehlte_stadt == '':
         return Response("Stadt ist None", status=400)
 
+    ausgewaehlte_stadt = ausgewaehlte_stadt.strip()
+
     try:
         vorhersage = wetter_dienst.get_vorhersage(ausgewaehlte_stadt)
 
     except NichtGefundenFehler as error:
         print(error)
         return Response(f"{ausgewaehlte_stadt} ist nicht gefunden", status=404)
-
-    
 
     temperaturen_isoformat = []
 
