@@ -12,20 +12,17 @@
 				"ms-python.autopep8"
 			]
 		}
-	}
-
+	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {}
+	},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-
+	"postCreateCommand": "pip3 install --user -r requirements.txt && sudo apt-get update && sudo apt-get -y install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb && npm install && npx cypress install"
 	// Configure tool-specific properties.
 	// "customizations": {},
-
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
 }

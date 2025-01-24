@@ -5,12 +5,14 @@ let wetterDiagramm = null;
 function wetterAbrufen() {
     const stadt = document.getElementById('city').value;
     if (!stadt) {
-        alert('Bitte geben Sie eine Stadt ein');
+        document.getElementById('weatherInfo').innerHTML = 'Bitte geben Sie eine Stadt ein';
         return;
     }
 
     fetch(`/wetter?stadt=${stadt}`)
-        .then(response => response.json())
+        .then(response => {
+            return response.json();
+        })
         .then(daten => {
             wetterAnzeigen(daten);
         })
@@ -19,40 +21,37 @@ function wetterAbrufen() {
         });
 
     fetch(`/vorhersage?stadt=${stadt}`)
-        .then(response => response.json())
+        .then(response => {
+            return response.json();
+        })
         .then(daten => {
             zeichneDiagramm(daten.temperaturen);
         })
         .catch(fehler => {
-            console.error('Fehler beim Abrufen der Vorhersagedaten:', fehler);
+            document.getElementById('weatherChartError').innerHTML = 'Fehler beim Abrufen der Wettervorhersage';
         });
 }
 
 function wetterAnzeigen(daten) {
-    if (daten.error) {
-        document.getElementById('weatherInfo').innerHTML = 'Stadt nicht gefunden!';
-    } else {
+    const weatherIcon = daten.wetterbedingungen.icon;
+    const iconUrl = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
 
-        const weatherIcon = daten.wetterbedingungen.icon;
-        const iconUrl = `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`;
-
-        document.getElementById('weatherInfo').innerHTML = `
+    document.getElementById('weatherInfo').innerHTML = `
             <img src="${iconUrl}" alt="Wetter Icon" class="mb-3">
-            <p>Temperatur: ${daten.temperature}°C</p>
-            <p>Minimale Temperatur: ${daten.min_temperature}°C</p>
-            <p>Maximale Temperatur: ${daten.max_temperature}°C</p>
-            <p>Windgeschwindigkeit: ${daten.wind} m/s</p>
-            <p>Luftfeuchtigkeit: ${daten.luftfeuchtigkeit}%</p>
-            <p>Sonnenaufgang: ${new Date(daten.sonnenaufgang).toLocaleTimeString()}</p>
-            <p>Sonnenuntergang: ${new Date(daten.sonnenuntergang).toLocaleTimeString()}</p>
+            <p>Temperatur: <span data-cy="temperatur">${daten.temperature}</span>°C</p>
+            <p>Minimale Temperatur: <span data-cy="min-temperatur">${daten.min_temperature}</span>°C</p>
+            <p>Maximale Temperatur: <span data-cy="max-temperatur">${daten.max_temperature}</span>°C</p>
+            <p>Windgeschwindigkeit: <span data-cy="windgeschwindigkeit">${daten.wind} </span>m/s</p>
+            <p>Luftfeuchtigkeit: <span data-cy="luftfeuchtigkeit">${daten.luftfeuchtigkeit}</span>%</p>
+            <p>Sonnenaufgang: <span data-cy="sonnenaufgang">${new Date(daten.sonnenaufgang).toLocaleTimeString()}</span></p>
+            <p>Sonnenuntergang: <span data-cy="sonnenuntergang">${new Date(daten.sonnenuntergang).toLocaleTimeString()}</span></p>
         `;
-    }
 }
 
 function zeichneDiagramm(temperaturen) {
     const labels = temperaturen.map(d => new Date(d.datum_zeit).toLocaleString());
     const datenTemperatur = temperaturen.map(d => d.temperature);
-        
+
     const ctx = document.getElementById('weatherChart').getContext('2d');
 
     if (wetterDiagramm) {
@@ -70,7 +69,7 @@ function zeichneDiagramm(temperaturen) {
         fill: false
     })
 
-   
+
     wetterDiagramm = new Chart(ctx, {
         type: 'line',
         data: {
